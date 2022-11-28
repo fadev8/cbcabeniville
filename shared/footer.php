@@ -58,10 +58,10 @@
                             <h5 class="widget-title">Contact Us</h5>
 
                             <div class="contact-information">
-                                <p><i class="fa fa-map-marker" aria-hidden="true"></i> 40 Baria Sreet, NewYork City, US</p>
-                                <a href="callto:001-1234-88888"><i class="fa fa-phone" aria-hidden="true"></i> 001-1234-88888</a>
-                                <a href="mailto:info.deercreative@gmail.com"><i class="fa fa-envelope" aria-hidden="true"></i> info.deercreative@gmail.com</a>
-                                <p><i class="fa fa-clock-o" aria-hidden="true"></i> Mon - Fri: 08.00am - 18.00pm</p>
+                                <p><i class="fa fa-map-marker" aria-hidden="true"></i> Q. Residentielle, Bungulu Beni - RDC</p>
+                                <a href="callto:001-1234-88888"><i class="fa fa-phone" aria-hidden="true"></i> +243 991 832 665</a>
+                                <a href="mailto:cimcbcafrancobeni@gmail.com"><i class="fa fa-envelope" aria-hidden="true"></i> cimcbcafrancobeni@gmail.com</a>
+                                <p><i class="fa fa-clock-o" aria-hidden="true"></i> Lundi - Samedi: 08h00 - 17h00</p>
                             </div>
 
                         </div>
@@ -79,7 +79,7 @@
                     <div class="col-12 col-md-6">
                         <div class="copywrite-text">
                             <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
- &copy; 2019 CBCA Francophone Beni | Template by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+ &copy; 2022 CBCA Francophone Beni | Template by <a href="https://colorlib.com" target="_blank">Colorlib</a>
 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 </p>
                         </div>

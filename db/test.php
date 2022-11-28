@@ -9,7 +9,29 @@
 </head>
 <body>
     <form action="" method="post" enctype="multipart/form-data">
-        <input type="file" name="document" id="document">
+        <input type="text" name="idOrateur" id="titre"><br><br>
+
+        <input type="text" name="idCategorie" id="titre"><br><br>
+
+        <input type="text" name="titre" id="titre"><br><br>
+
+        <input type="text" name="reference" id="titre"><br><br>
+
+        <input type="text" name="ladate" id="titre"><br><br>
+
+        <input type="text" name="details" id="titre"><br><br>
+        
+        <input type="text" name="tags" id="titre"><br><br>
+
+        <input type="text" name="video" id="document">
+        <br><br>
+        <input type="text" name="audio" id="document">
+        <br><br>
+
+        <input type="text" name="photo" id="document">
+        <br><br>
+
+        <input type="text" name="document" id="document">
         <br><br>
         <input type="submit" value="Send">
     </form>
@@ -22,19 +44,22 @@
 
     $file = new File();
     $con = new DB();
-    $nom = "C'est maintenant son appel";
-    $nom = str_replace(' ','_',$nom);
-    echo $nom;
-    //$data = $con->findCategorieById(2);
-    //$con->deleteOrateur(1);
-    //$con->editOrateur(1,'Faden','Sibamtaki','Ir.')
-    //$data = $con->findOrateur('sib');
-    //echo $data['nom'].' '.$data['obligatoire'].' -'.$data['createdAt'];
-    // if($data != null || $data->fetch()){
-    //     echo $data
-    // }else{
-    //     echo 'nooo';
-    // }
+   if(
+    isset($_POST['idOrateur']) &&
+    isset($_POST['idCategorie']) &&
+    isset($_POST['titre']) &&
+    isset($_POST['reference']) &&
+    isset($_POST['details']) &&
+    isset($_POST['ladate']) &&
+    isset($_POST['tags']) &&
+    isset($_POST['video']) &&
+    isset($_POST['audio']) &&
+    isset($_POST['document']) &&
+    isset($_POST['photo']) 
+   ){
+    
+    $boo = $con->addPredication($_POST['idOrateur'],$_POST['idCategorie'],$_POST['titre'],$_POST['reference'],$_POST['details'],$_POST['ladate'],$_POST['tags'],$_POST['video'],$_POST['photo'],$_POST['audio'],$_POST['document']);
 
-    $file->uploadAudio($_FILES['document']);
+    echo $boo;
+   }
 ?>

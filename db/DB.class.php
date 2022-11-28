@@ -180,19 +180,105 @@ class DB{
     }
 
     public function findCategorieByObligatoire($etat){
-        if(!empty($id)){
-            $id = (int)$id;
-            $sql = "SELECT idCategorie as id, nomCategorie as nom, obligatoire, createdAt FROM Categorie WHERE idCategorie = :idCategorie";
+        if(!empty($etat)){
+            $etat = (int)$etat;
+            $sql = "SELECT idCategorie as id, nomCategorie as nom, obligatoire, createdAt FROM Categorie WHERE obligatoire = :obligatoire";//
 
             $req = $this->db->prepare($sql);
             $req->execute(array(
-                'idCategorie'=>htmlentities($id)
+                'obligatoire'=>htmlentities($etat)
             ));
-
+            
             return $req;
 
         }else{
             return null;
+        }
+    }
+
+    public function editCategorie($idCategorie,$nomCategorie,$etat){
+        if(!empty($idCategorie) && !empty($nomCategorie) && !empty($etat)){
+            $etat = (int) $etat;
+
+            $sql = "UPDATE Categorie SET nomCategorie = :nom, obligatoire =:etat";
+            $req = $this->db->prepare($sql);
+            if(
+                $req->execute(array(
+                    'nom' => htmlentities($nomCategorie),
+                    'etat' => htmlentities($etat)
+                ))
+            ){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+
+    public function deleteCategorie($idCategorie){
+        if(!empty($idCategorie)){
+            $idCategorie = (int) $idCategorie;
+            $sql = "DELETE FROM Categorie WHERE idCategorie = :idCategorie";
+            $req = $this->db->prepare($sql);
+
+            if(
+                $req->execute(array(
+                    'idCategorie' => htmlentities($idCategorie)
+                ))
+            ){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+
+    //Predication 
+
+    public function addPredication($idOrateur, $idCategorie, $titre, $reference,$date, $details, $tags,$video,$photo,$audio,$document){
+        //adding a new preaching
+        if(
+            !empty($idOrateur) &&
+            !empty($idCategorie) &&
+            !empty($titre) &&
+            !empty($reference) &&
+            !empty($date) &&
+            !empty($details) &&
+            !empty($tags) &&
+            !empty($photo) &&
+            !empty($audio) &&
+            !empty($video) &&
+            !empty($document)
+        ){
+            $idOrateur = (int) $idOrateur;
+            $idCategorie = (int) $idCategorie;
+            
+            $sql = "INSERT INTO Predication(idOrateur, idCategorie, titre, texte, contenu, tags, ladate, photo, video, audio, document, createdAt) VALUES(:idOrateur, :idCategorie, :titre, :texte, :contenu, :tags, :ladate, :photo, :video, :audio, :document, NOW())";            
+            
+            $req = $this->db->prepare($sql);
+            if($req->execute(array(
+               'idOrateur' => htmlentities($idOrateur),
+                'idCategorie' => htmlentities($idCategorie),
+                'titre' => htmlentities($titre),
+                'texte' => htmlentities($reference),
+                'contenu' => htmlentities($details),
+                'tags' => htmlentities($tags),
+                'ladate' => htmlentities($date),
+                'photo' => htmlentities($photo),
+                'video' => htmlentities($video),
+                'audio' => htmlentities($audio),
+                'document' => htmlentities($document)
+            ))){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
         }
     }
 }

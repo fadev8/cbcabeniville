@@ -1,6 +1,13 @@
 <?php
+    if(isset($_GET['s']) && !empty($_GET['s'])){
+        $slug = $_GET['s'];
+        $titre = str_replace('_',' ',$slug);
+    }else{
+        header('location:sermons.php');
+    }
 	//including the header
 	include_once('shared/header.php');
+    
 ?>
 
     <!-- ##### Breadcrumb Area Start ##### -->
@@ -32,7 +39,7 @@
                         <!-- Sermons Details Area -->
                         <div class="single-post-details-area">
                             <div class="post-content">
-                                <h2 class="post-title mb-30">Start a New Way of Living</h2>
+                                <h2 class="post-title mb-30"><?php echo $titre;?></h2>
                                 <img class="mb-30" src="img/bg-img/32.jpg" alt="">
                                 <!-- Catagory & Share -->
                                 <div class="catagory-share-meta d-flex flex-wrap justify-content-between align-items-center">
