@@ -239,7 +239,7 @@ class DB{
 
     //Predication 
 
-    public function addPredication($idOrateur, $idCategorie, $titre, $reference,$date, $details, $tags,$video,$photo,$audio,$document){
+    public function addPredication($idOrateur, $idCategorie, $titre, $reference,$date, $details, $tags,$photo){
         //adding a new preaching
         if(
             !empty($idOrateur) &&
@@ -249,15 +249,15 @@ class DB{
             !empty($date) &&
             !empty($details) &&
             !empty($tags) &&
-            !empty($photo) &&
-            !empty($audio) &&
-            !empty($video) &&
-            !empty($document)
+            !empty($photo) //&&
+            //!empty($audio) &&
+            //!empty($video) &&
+            //!empty($document)
         ){
             $idOrateur = (int) $idOrateur;
             $idCategorie = (int) $idCategorie;
             
-            $sql = "INSERT INTO Predication(idOrateur, idCategorie, titre, texte, contenu, tags, ladate, photo, video, audio, document, createdAt) VALUES(:idOrateur, :idCategorie, :titre, :texte, :contenu, :tags, :ladate, :photo, :video, :audio, :document, NOW())";            
+            $sql = "INSERT INTO Predication(idOrateur, idCategorie, titre, texte, contenu, tags, ladate, photo, createdAt) VALUES(:idOrateur, :idCategorie, :titre, :texte, :contenu, :tags, :ladate, :photo, NOW())";            
             
             $req = $this->db->prepare($sql);
             if($req->execute(array(
@@ -268,15 +268,214 @@ class DB{
                 'contenu' => htmlentities($details),
                 'tags' => htmlentities($tags),
                 'ladate' => htmlentities($date),
-                'photo' => htmlentities($photo),
-                'video' => htmlentities($video),
-                'audio' => htmlentities($audio),
-                'document' => htmlentities($document)
+                'photo' => htmlentities($photo)
+                //'video' => htmlentities($video),
+                //'audio' => htmlentities($audio),
+                //'document' => htmlentities($document)
             ))){
                 return true;
             }else{
                 return false;
             }
+        }else{
+            return false;
+        }
+    }
+
+    public function findAllPredication(){
+        $sql = "SELECT p.idPredication, o.idOrateur, o.prenomOrateur, o.postnomOrateur, o.titreOrateur, c.idCategorie, c.nomCategorie, p.titre, p.texte as reference, p.contenu as details, p.tags, p.photo, p.video, p.audio, p.document , DATE_FORMAT(p.ladate,'%d') as jour, DATE_FORMAT(p.ladate,'%b') as mois, DATE_FORMAT(p.ladate,'%Y') as annee 
+            FROM Predication p 
+            INNER JOIN Orateur o ON o.idOrateur = p.idOrateur 
+            INNER JOIN Categorie c ON c.idCategorie = p.idCategorie";
+
+        $req = $this->db->prepare($sql);
+        $req->execute(array());
+
+        return $req;
+            
+    }
+
+
+    public function findAllPredicationDESC(){
+        $sql = "SELECT p.idPredication, o.idOrateur, o.prenomOrateur, o.postnomOrateur, o.titreOrateur, c.idCategorie, c.nomCategorie, p.titre, p.texte as reference, p.contenu as details,p.tags, p.photo, p.video, p.audio, p.document , DATE_FORMAT(p.ladate,'%d') as jour, DATE_FORMAT(p.ladate,'%b') as mois, DATE_FORMAT(p.ladate,'%Y') as annee  
+            FROM Predication p 
+            INNER JOIN Orateur o ON o.idOrateur = p.idOrateur 
+            INNER JOIN Categorie c ON c.idCategorie = p.idCategorie 
+            ORDER BY p.idPredication DESC";
+
+        $req = $this->db->prepare($sql);
+        $req->execute(array());
+
+        return $req;
+    }
+
+    public function findAllPreviousPredication(){
+        $sql = "SELECT p.idPredication, o.idOrateur, o.prenomOrateur, o.postnomOrateur, o.titreOrateur, c.idCategorie, c.nomCategorie, p.titre, p.texte as reference, p.contenu as details,p.tags, p.photo, p.video, p.audio, p.document , DATE_FORMAT(p.ladate,'%d') as jour, DATE_FORMAT(p.ladate,'%b') as mois, DATE_FORMAT(p.ladate,'%Y') as annee  
+            FROM Predication p 
+            INNER JOIN Orateur o ON o.idOrateur = p.idOrateur 
+            INNER JOIN Categorie c ON c.idCategorie = p.idCategorie 
+            ORDER BY p.idPredication DESC OFFSET 1";
+
+        $req = $this->db->prepare($sql);
+        $req->execute(array());
+
+        return $req;
+    }
+
+
+    public function findPredicationById($idPredication){
+        $idPredication = (int) $idPredication;
+        if($idPredication > 0){
+            $sql = "SELECT p.idPredication, o.idOrateur, o.prenomOrateur, o.postnomOrateur, o.titreOrateur, c.idCategorie, c.nomCategorie, p.titre, p.texte as reference, p.contenu as details,p.tags, p.photo, p.video, p.audio, p.document , DATE_FORMAT(p.ladate,'%d') as jour, DATE_FORMAT(p.ladate,'%b') as mois, DATE_FORMAT(p.ladate,'%Y') as annee 
+            FROM Predication p 
+            INNER JOIN Orateur o ON o.idOrateur = p.idOrateur 
+            INNER JOIN Categorie c ON c.idCategorie = p.idCategorie 
+            WHERE p.idPredication = :idPredication";
+
+            $req = $this->db->prepare($sql);
+            $req->execute(array(
+                'idPredication' => htmlentities($idPredication)
+            ));
+            
+            if($predication = $req->fetch()){
+                return $predication;
+            }else{
+                
+                return null;
+            }
+        }else{
+            return null;
+        }
+    }
+
+
+
+    public function findPredicationByTitre($titre){
+        if(isset($titre) && !empty($this)){
+            //requestion joined with other tables
+            $sql = "SELECT p.idPredication, o.idOrateur, o.prenomOrateur, o.postnomOrateur, o.titreOrateur, c.idCategorie, c.nomCategorie, p.titre, p.texte as reference, p.contenu as details,p.tags, p.photo, p.video, p.audio, p.document , DATE_FORMAT(p.ladate,'%d') as jour, DATE_FORMAT(p.ladate,'%b') as mois, DATE_FORMAT(p.ladate,'%Y') as annee 
+            FROM Predication p 
+            INNER JOIN Orateur o ON o.idOrateur = p.idOrateur 
+            INNER JOIN Categorie c ON c.idCategorie = p.idCategorie 
+            WHERE p.titre = :titre";
+
+            $req = $this->db->prepare($sql);
+            $req->execute(array(
+                'titre' => htmlentities($titre)
+            ));
+            
+            if($predication = $req->fetch()){
+                return $predication;
+            }else{
+                
+                return null;
+            }
+        }else{
+            return null;
+        }
+    }
+
+    public function getLatestPredication(){
+        $sql = "SELECT p.idPredication, o.idOrateur, o.prenomOrateur, o.postnomOrateur, o.titreOrateur, c.idCategorie, c.nomCategorie, p.titre, p.texte as reference, p.contenu as details,p.tags, p.photo, p.video, p.audio, p.document , DATE_FORMAT(p.ladate,'%d') as jour, DATE_FORMAT(p.ladate,'%b') as mois, DATE_FORMAT(p.ladate,'%Y') as annee 
+            FROM Predication p 
+            INNER JOIN Orateur o ON o.idOrateur = p.idOrateur 
+            INNER JOIN Categorie c ON c.idCategorie = p.idCategorie 
+            ORDER BY p.idPredication DESC";
+
+        $req = $this->db->prepare($sql);
+        $req->execute(array());
+
+        if($predication = $req->fetch()){
+            return $predication;
+        }else{
+            
+            return null;
+        }
+    }
+
+    public function updatePhotoPredication($idPredication, $lienPhoto){
+        
+        if(isset($lienPhoto) && !empty($lienPhoto) && isset($idPredication)){
+            $idPredication = (int) $idPredication;
+            $sql = "UPDATE Predication SET photo = :photo
+                    WHERE idPredication = :idPredication";
+
+            $req = $this->db->prepare($sql);
+            if($req->execute(array(
+                'idPredication' => htmlentities($idPredication),
+                'photo' => htmlentities($lienPhoto)
+            ))){
+                return true;
+            }else{
+                return false;
+            }
+
+        }else{
+            return false;
+        }
+    }
+
+    public function updateAudioPredication($idPredication, $lienAudio){
+        
+        if(isset($lienAudio) && !empty($lienAudio) && isset($idPredication)){
+            $idPredication = (int) $idPredication;
+            $sql = "UPDATE Predication SET audio = :audio
+                    WHERE idPredication = :idPredication";
+
+            $req = $this->db->prepare($sql);
+            if($req->execute(array(
+                'idPredication' => htmlentities($idPredication),
+                'audio' => htmlentities($lienAudio)
+            ))){
+                return true;
+            }else{
+                return false;
+            }
+
+        }else{
+            return false;
+        }
+    }
+
+    public function updateVideoPredication($idPredication, $lienVideo){
+                
+        if(isset($lienVideo) && !empty($lienVideo) && isset($idPredication)){
+            $idPredication = (int) $idPredication;
+            $sql = "UPDATE Predication SET video = :video
+                    WHERE idPredication = :idPredication";
+
+            $req = $this->db->prepare($sql);
+            if($req->execute(array(
+                'idPredication' => htmlentities($idPredication),
+                'video' => htmlentities($lienVideo)
+            ))){
+                return true;
+            }else{
+                return false;
+            }
+
+        }else{
+            return false;
+        }
+    }
+
+    public function updateDocumentPredication($idPredication, $lienDocument){
+        
+        if(isset($lienDocument) && !empty($lienDocument) && isset($idPredication)){
+            $idPredication = (int) $idPredication;
+            $sql = "UPDATE Predication SET document = :document
+                    WHERE idPredication = :idPredication";
+
+            $req = $this->db->prepare($sql);
+            if($req->execute(array(
+                'idPredication' => htmlentities($idPredication),
+                'document' => htmlentities($lienDocument)
+            ))){
+                return true;
+            }else{
+                return false;
+            }
+
         }else{
             return false;
         }

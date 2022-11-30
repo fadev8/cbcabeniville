@@ -2,7 +2,10 @@
 	//including the header
 	include_once('shared/header.php');
     include_once('views/PredicationView.class.php');
+    include_once('./db/DB.class.php');
+    //use objets
     $predView = new PredicationView();
+    $con = new DB();
 ?>
 
     <!-- ##### Breadcrumb Area Start ##### -->
@@ -24,8 +27,27 @@
 
     <!-- ##### Sermons Area Start ##### -->
         <?php
-            $resume = "Lorem 20";
-            echo $predView->latestPredication("L'amour de Dieu","Francine Kazi",$resume,"salut, pardon, péché","./img/bg-img/1.jpg","27","NOV","2022","#","#","#");
+            $predication = $con->getLatestPredication();
+            //$predication = null;
+            if($predication != null){
+                $titre = $predication['titre'];
+                $orateur = $predication['titreOrateur'].' '.$predication['prenomOrateur'].' '.$predication['postnomOrateur'];
+                $resume = $predication['details'];
+                $tags = $predication['tags'];
+                $image = $predication['photo'];
+                $jour = $predication['jour'];
+                $mois = $predication['mois'];
+                $annee = $predication['annee'];
+                $document = $predication['document'];
+                $video = $predication['video'];
+                $audio = $predication['audio'];
+
+                //affichage de la predication
+                echo $predView->latestPredication($titre,$orateur,$resume,$tags,$image,$jour,$mois,$annee,$video,$audio,$document);
+            }else{
+                echo $predView->aucunePredication();
+            }
+            
         ?>
     <!-- ##### Sermons Area End ##### -->
 
@@ -45,10 +67,32 @@
             <div class="row">
                 <!-- Single Latest Sermons -->
                 <?php
-                    for($i = 1; $i <9; $i++){
-                        $titre = "L'armee de Dieu";
-                        echo $predView->singlePredication($titre,'Faden Sibamtaki','hope, surrender, faith','./img/bg-img/6.jpg','27','NOV','2022','','',''); 
-                    }                   
+                //Liste des anciennces videos
+                    $stmt = $con->findAllPredicationDESC();
+                    if($stmt != null){
+                        $stmt->fetch();
+                        
+                        while($predication = $stmt->fetch()){
+                            
+                            $titre = $predication['titre'];
+                            $orateur = $predication['titreOrateur'].' '.$predication['prenomOrateur'].' '.$predication['postnomOrateur'];
+                            $resume = $predication['details'];
+                            $tags = $predication['tags'];
+                            $image = $predication['photo'];
+                            $jour = $predication['jour'];
+                            $mois = $predication['mois'];
+                            $annee = $predication['annee'];
+                            $document = $predication['document'];
+                            $video = $predication['video'];
+                            $audio = $predication['audio'];
+
+                            
+                            //affichage de la predication
+                            echo $predView->singlePredication($titre,$orateur,$tags, $image,$jour, $mois, $annee,$video,$audio,$document);
+                        }
+                    }else{
+                        echo "<h3> Aucune prédication disponible</h3>";
+                    }                
                 ?>
             </div>
                 
@@ -63,8 +107,8 @@
                 <!-- Subscribe Text -->
                 <div class="col-12 col-lg-6">
                     <div class="subscribe-text">
-                        <h3>Subscribe To Our Newsletter</h3>
-                        <h6>Subcribe Us And Tell Us About Your Story</h6>
+                        <h3>S'abonner &agrave; notre Newsletter</h3>
+                        <h6>Recevez les mails concernant les activites chez nous</h6>
                     </div>
                 </div>
                 <!-- Subscribe Form -->

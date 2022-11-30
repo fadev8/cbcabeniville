@@ -1,5 +1,5 @@
 
-<!DOCTYPE html>
+<!--DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -36,7 +36,7 @@
         <input type="submit" value="Send">
     </form>
 </body>
-</html>
+</html-->
 
 <?php
     require_once('DB.class.php');
@@ -44,22 +44,37 @@
 
     $file = new File();
     $con = new DB();
-   if(
-    isset($_POST['idOrateur']) &&
-    isset($_POST['idCategorie']) &&
-    isset($_POST['titre']) &&
-    isset($_POST['reference']) &&
-    isset($_POST['details']) &&
-    isset($_POST['ladate']) &&
-    isset($_POST['tags']) &&
-    isset($_POST['video']) &&
-    isset($_POST['audio']) &&
-    isset($_POST['document']) &&
-    isset($_POST['photo']) 
-   ){
-    
-    $boo = $con->addPredication($_POST['idOrateur'],$_POST['idCategorie'],$_POST['titre'],$_POST['reference'],$_POST['details'],$_POST['ladate'],$_POST['tags'],$_POST['video'],$_POST['photo'],$_POST['audio'],$_POST['document']);
 
-    echo $boo;
-   }
+    $predication = $con->updatePhotoPredication(1,"faden.jpg");
+    if($predication){
+        echo 'ouiui';
+    }else{
+        echo 'no no o';
+    }
+    // while($predication = $req->fetch()){
+    //     echo $predication['titre'].'<br/>';
+    // }
+    // if($predication != null){
+    //     echo $predication['jour'];
+    // }else{
+    //     echo 'nulllo';
+    // }
+//    if(
+//     isset($_POST['idOrateur']) &&
+//     isset($_POST['idCategorie']) &&
+//     isset($_POST['titre']) &&
+//     isset($_POST['reference']) &&
+//     isset($_POST['details']) &&
+//     isset($_POST['ladate']) &&
+//     isset($_POST['tags']) &&
+//     isset($_POST['video']) &&
+//     isset($_POST['audio']) &&
+//     isset($_POST['document']) &&
+//     isset($_POST['photo']) 
+//    ){
+    
+//     $boo = $con->addPredication($_POST['idOrateur'],$_POST['idCategorie'],$_POST['titre'],$_POST['reference'],$_POST['details'],$_POST['ladate'],$_POST['tags'],$_POST['video'],$_POST['photo'],$_POST['audio'],$_POST['document']);
+
+//     echo $boo;
+//    }
 ?>
