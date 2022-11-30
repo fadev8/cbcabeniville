@@ -6,7 +6,7 @@ class DB{
         //database connection
         try{
             $this->db = new PDO("mysql:host=localhost;dbname=cbcabeniville","root","mysql");
-            //$this->db = new PDO("mysql:host=localhost;dbname=epiz_33060880_cbcabeniville","epiz_33060880","r5sjv28q");
+            //$this->db = new PDO("mysql:host=sql301.epizy.com;dbname=epiz_33060880_cbcabeniville","epiz_33060880","r5sjv28q");
         }catch(Exception $e){
             return false;
         }
@@ -318,7 +318,7 @@ class DB{
 
         $req = $this->db->prepare($sql);
         $req->execute(array());
-
+        echo 'gooooo';
         return $req;
     }
 
