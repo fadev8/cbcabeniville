@@ -41,9 +41,11 @@
                 $document = $predication['document'];
                 $video = $predication['video'];
                 $audio = $predication['audio'];
+                $service = $predication['nomCategorie'];
+                $reference = $predication['reference'];
 
                 //affichage de la predication
-                echo $predView->latestPredication($titre,$orateur,$resume,$tags,$image,$jour,$mois,$annee,$video,$audio,$document);
+                echo $predView->latestPredication($titre,$orateur,$reference,$resume,$tags,$image,$jour,$mois,$annee,$video,$audio,$document,$service);
             }else{
                 echo $predView->aucunePredication();
             }

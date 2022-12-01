@@ -52,7 +52,7 @@ class File{
                 if($photo['size'] < 10000000){//
                     //if the file is less than 10mb
                     if(
-                        move_uploaded_file($photo['tmp_name'],'../'.$path.$photoname)
+                        move_uploaded_file($photo['tmp_name'],'../../'.$path.$photoname)
                     ){
                         
                         return $path.$photoname;

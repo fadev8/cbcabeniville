@@ -35,7 +35,7 @@ class PredicationView
         return $content;
     }
 
-    public function latestPredication($titre, $predicateur, $resume, $tags, $image, $jour, $mois, $annee, $lienVideo, $audio, $document)
+    public function latestPredication($titre, $predicateur,$reference, $resume, $tags, $image, $jour, $mois, $annee, $lienVideo, $audio, $document,$service)
     {
 
         $content = '<div class="sermons-content-area section-padding-100-0">
@@ -49,9 +49,11 @@ class PredicationView
                     <div class="sermons-text text-center">
                         <a href="sermons-details.php?s=' . str_replace(' ', '_', $titre) . '"><h2>' . $titre . '</h2></a>
                         <div class="sermons-meta-data d-flex flex-wrap justify-content-center">
-                            <p><i class="fa fa-user" aria-hidden="true"></i> Orateur: <span>' . $predicateur . '</span></p>
-                            <p><i class="fa fa-tag" aria-hidden="true"></i> Categories: <span>' . $tags . '</span></p>
-                            <p><i class="fa fa-clock-o" aria-hidden="true"></i> ' . $jour . ' ' . $mois . ' ' . $annee . '</p>
+                            <p><i class="fa fa-book" aria-hidden="true"></i> Refs : <b> ' . $reference . '</b></p>
+                            <p><i class="fa fa-user" aria-hidden="true"></i> Orateur: <b>' . $predicateur . '</b></p>
+                            <p><i class="fa fa-group" aria-hidden="true"></i>  <b>' . $service . '</b></p>
+                            <p><i class="fa fa-tag" aria-hidden="true"></i> Mots Clefs: <b>' . $tags . '</b></p>
+                            <p><i class="fa fa-clock-o" aria-hidden="true"></i> <b>' . $jour . ' ' . $mois . ' ' . $annee . '</b></p>
                         </div>
                         <div class="sermons-cata">
                             <a href="#" data-toggle="tooltip" data-placement="top" title="Video"><i class="fa fa-video-camera" aria-hidden="true"></i></a>

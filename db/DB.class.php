@@ -7,6 +7,7 @@ class DB{
         try{
             $this->db = new PDO("mysql:host=localhost;dbname=cbcabeniville","root","mysql");
             //$this->db = new PDO("mysql:host=sql301.epizy.com;dbname=epiz_33060880_cbcabeniville","epiz_33060880","r5sjv28q");
+            //echo '<h1>ehello</h1>';
         }catch(Exception $e){
             return false;
         }
@@ -57,6 +58,17 @@ class DB{
         }else{
             return null;
         }
+    }
+
+    public function findAllOrateurs(){
+        
+        $sql = "SELECT idOrateur as id, prenomOrateur as prenom, postnomOrateur as postnom, titreOrateur as titre 
+            FROM Orateur ";
+             
+        $req = $this->db->prepare($sql);
+        $req->execute(array());
+        
+        return $req;        
     }
 
     public function findOrateur($motClef){
@@ -194,6 +206,16 @@ class DB{
         }else{
             return null;
         }
+    }
+
+    public function findAllCategorie(){
+        
+            $sql = "SELECT idCategorie as id, nomCategorie as nom, obligatoire, createdAt FROM Categorie ORDER BY obligatoire DESC";//
+
+            $req = $this->db->prepare($sql);
+            $req->execute(array());
+            
+            return $req;
     }
 
     public function editCategorie($idCategorie,$nomCategorie,$etat){
