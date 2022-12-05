@@ -44,7 +44,6 @@
 </head>
 
 <body>
-
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
 
@@ -267,7 +266,6 @@
     </nav><!-- End Icons Navigation -->
 
   </header><!-- End Header -->
-
   <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar">
 
@@ -289,7 +287,7 @@
           <?php
             echo $view->subMenu($bullet,"Ajouter Predication","predication.php");
 
-            echo $view->subMenu($bullet,"Ajouter Ficher","#");
+            echo $view->subMenu($bullet,"Ajouter Ficher","addfile.php");
 
             echo $view->subMenu($bullet,"Modifier Predication","#");
           ?>
@@ -379,3 +377,4 @@
     </ul>
 
   </aside><!-- End Sidebar-->
+ 

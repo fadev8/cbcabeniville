@@ -17,7 +17,7 @@ class PredicationView
                         <div class="sermons-content">
                             <div class="sermons-cata">
                                 <a href="' . $lienVideo . '" data-toggle="tooltip" data-placement="top" title="Video"><i class="fa fa-video-camera" aria-hidden="true"></i></a>
-                                <a href="#" data-toggle="tooltip" data-placement="top" title="Audio"><i class="fa fa-headphones" aria-hidden="true"></i></a>
+                                <a href="'.$audio.'" data-toggle="tooltip" data-placement="top" title="Audio"><i class="fa fa-headphones" aria-hidden="true"></i></a>
                                 <a href="#" data-toggle="tooltip" data-placement="top" title="Docs"><i class="fa fa-file" aria-hidden="true"></i></a>
                                 <a href="#" data-toggle="tooltip" data-placement="top" title="Download"><i class="fa fa-cloud-download" aria-hidden="true"></i></a>
                             </div>
@@ -37,7 +37,10 @@ class PredicationView
 
     public function latestPredication($titre, $predicateur,$reference, $resume, $tags, $image, $jour, $mois, $annee, $lienVideo, $audio, $document,$service)
     {
-
+        if(strlen($resume)>300){
+            //if the text is more than 300 characters, we pick the 300 first
+            $resume = substr($resume, 0, 300) . '...';
+        }
         $content = '<div class="sermons-content-area section-padding-100-0">
         <div class="container">
             <div class="row">
@@ -57,11 +60,11 @@ class PredicationView
                         </div>
                         <div class="sermons-cata">
                             <a href="#" data-toggle="tooltip" data-placement="top" title="Video"><i class="fa fa-video-camera" aria-hidden="true"></i></a>
-                            <a href="#" data-toggle="tooltip" data-placement="top" title="Audio"><i class="fa fa-headphones" aria-hidden="true"></i></a>
+                            <a href="'.$audio.'" data-toggle="tooltip" data-placement="top" title="Audio"><i class="fa fa-headphones" aria-hidden="true"></i></a>
                             <a href="#" data-toggle="tooltip" data-placement="top" title="Docs"><i class="fa fa-file" aria-hidden="true"></i></a>
                             <a href="#" data-toggle="tooltip" data-placement="top" title="Download"><i class="fa fa-cloud-download" aria-hidden="true"></i></a>
                         </div>
-                        <p>' . $resume . '</p>
+                        <p>' . nl2br($resume) . '</p>
                         <div class="read-more-share d-flex flex-wrap justify-content-between">
                             <div class="read-more-btn">
                                 <a href="sermons-details.php?s=' . str_replace(' ', '_', $titre) . '"> Voir plus <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>

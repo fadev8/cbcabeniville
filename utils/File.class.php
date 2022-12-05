@@ -18,7 +18,7 @@ class File{
                 if($audio['size'] < 100000000){//
                     //if the file is less than 100mb
                     if(
-                        move_uploaded_file($audio['tmp_name'],'../'.$path.$audioname)
+                        move_uploaded_file($audio['tmp_name'],'../../'.$path.$audioname)
                     ){
                         return $path.$audioname;
                     }else{
@@ -88,7 +88,7 @@ class File{
                 if($document['size'] < 10000000){//
                     //if the file is less than 10mb
                     if(
-                        move_uploaded_file($document['tmp_name'],$path.$docname)
+                        move_uploaded_file($document['tmp_name'],'../../'.$path.$docname)
                     ){
                         return $path.$docname;
                     }else{
